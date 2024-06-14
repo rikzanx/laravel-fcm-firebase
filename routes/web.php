@@ -33,20 +33,23 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboardAdmin');
-Route::get('/user/dashboard', [DashboardController::class, 'user'])->name('dashboardUser');
-Route::get('/dashboard', [AuthController::class, 'redirectToDashboard'])->name('dashboard');
 
-Route::group(['prefix' => 'admin'],function(){
-    Route::resource('stockProduk', StockProductController::class,array('as' => 'admin'));
-    Route::resource('user-profile',UserProfileController::class,array('as' => 'admin'));
-});
+Route::middleware(['auth'])->group(function(){
+    Route::get('/dashboard', [AuthController::class, 'redirectToDashboard'])->name('dashboard');
 
-Route::group(['prefix' => 'user'],function(){
-    Route::resource('product-catalog',ProductCatalogController::class,array('as' => 'user'));
-    Route::resource('keranjang',KeranjangController::class,array('as' => 'user'));
-    Route::resource('ketentuan',KetentuanController::class,array('as' => 'user'));
-    Route::resource('lokasi',LokasiController::class,array('as' => 'user'));
-    Route::resource('kritik-saran',KritikSaranController::class,array('as' => 'user'));
-    Route::resource('user-profile',UserProfileController::class,array('as' => 'user'));
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('dashboardAdmin');
+    Route::group(['prefix' => 'admin'],function(){
+        Route::resource('stockProduk', StockProductController::class,array('as' => 'admin'));
+        Route::resource('user-profile',UserProfileController::class,array('as' => 'admin'));
+    });
+    
+    Route::get('/user/dashboard', [DashboardController::class, 'user'])->name('dashboardUser');
+    Route::group(['prefix' => 'user'],function(){
+        Route::resource('product-catalog',ProductCatalogController::class,array('as' => 'user'));
+        Route::resource('keranjang',KeranjangController::class,array('as' => 'user'));
+        Route::resource('ketentuan',KetentuanController::class,array('as' => 'user'));
+        Route::resource('lokasi',LokasiController::class,array('as' => 'user'));
+        Route::resource('kritik-saran',KritikSaranController::class,array('as' => 'user'));
+        Route::resource('user-profile',UserProfileController::class,array('as' => 'user'));
+    });
 });

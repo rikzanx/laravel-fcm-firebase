@@ -21,5 +21,13 @@ class UserSeeder extends Seeder
                 'phone' => '123',
                 'password'    => bcrypt('admin123')
         ]);
+        \App\Models\User::create([
+                'first_name'    => "user",
+                'last_name'    => "user",
+                'email'    => "user". '@gmail.com',
+                'role' => 'user',
+                'phone' => '123',
+                'password'    => bcrypt('user123')
+        ]);
     }
 }

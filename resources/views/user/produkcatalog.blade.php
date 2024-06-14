@@ -44,102 +44,25 @@
 <div id="grid" class="item-content animate__animated animate__fadeIn active" data-toggle-extra="tab-content">
     <!-- <div class="container-fluid"> -->
     <div class="row">
+        @foreach($barangs as $barang)
         <div class="col-lg-4 col-md-6">
             <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
+                <img src="{{ asset('foto_barang/'.$barang->foto) }}" class="card-img-top" alt="#">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
+                    <h4 class="card-title">{{ $barang->nama }}</h4>
+                    <p class="card-text">{{ $barang->deskripsi }}</p>
+                    <a href="#" class="btn btn-primary">Pesan</a>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-                <img src="templateot/assets/images/page-img/07.jpg" class="card-img-top" alt="#">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
-                    <a href="#" class="btn btn-primary">Button</a>
-                </div>
-            </div>
-        </div>
+        @endforeach
+        
     </div>
 </div>
 <!-- list content -->
 <div id="list" class="item-content animate__animated animate__fadeIn" data-toggle-extra="tab-content">
     <div class="row">
-        <div class="col-md-6 col-lg-4">
+        <!-- <div class="col-md-6 col-lg-4">
             <div class="card mb-2">
                 <div class="row no-gutters">
                     <div class="col-md-6 col-lg-4">
@@ -186,7 +109,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 @endsection
