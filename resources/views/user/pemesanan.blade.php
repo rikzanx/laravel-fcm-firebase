@@ -33,7 +33,11 @@
                                 <td style="text-align: center;" class="sorting_1">{{ $index+1 }}</td>
                                 <td style="text-align:center">{{ $pemesanan->no_pemesanan }}</td>
                                 <td style="text-align:center">{{ $pemesanan->total_harga }}</td>
-                                <td style="text-align: center;">{{ $pemesanan->status }}</td>
+                                @if($pemesanan->status == "konfirmasi" && $pemesanan->status_pengembalian == 1)
+                                    <td style="text-align: center;">Selesai</td>
+                                @else
+                                    <td style="text-align: center;">{{ $pemesanan->status }}</td>
+                                @endif
                                 <td style="text-align: center;">{{ $pemesanan->created_at }}</td>
                                 <td style="text-align: center;">
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example" data-toggle="modal">
@@ -79,7 +83,11 @@
                         <div class="col-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Status</label>
+                                @if($pemesanan->status == "konfirmasi" && $pemesanan->status_pengembalian == 1)
+                                <input type="text" class="form-control" name="total_harga" value="Selesai" placeholder="Masukkan Jumlah" disabled>
+                                @else
                                 <input type="text" class="form-control" name="total_harga" value="{{ $pemesanan->status }}" placeholder="Masukkan Jumlah" disabled>
+                                @endif
                             </div>
                         </div>
                         <div class="col-6">

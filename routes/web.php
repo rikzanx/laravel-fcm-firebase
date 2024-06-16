@@ -12,6 +12,7 @@ use App\Http\Controllers\KetentuanController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\NotificationSendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +30,16 @@ Route::get('/', function () {
     return redirect()->route('register');
 })->middleware('guest');
 
+Route::get('/test',[NotificationSendController::class,'home']);
+Route::post('/store-token', [NotificationSendController::class, 'updateDeviceToken'])->name('store.token');
+Route::post('/send-web-notification', [NotificationSendController::class, 'sendNotification'])->name('send.web-notification');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 Route::get('/home', [AuthController::class, 'redirectToDashboard'])->name('home');
-
+Route::patch('/fcm-token', [AuthController::class, 'updateToken'])->name('fcmToken');
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [AuthController::class, 'redirectToDashboard'])->name('dashboard');
@@ -45,6 +49,9 @@ Route::middleware(['auth'])->group(function(){
         Route::resource('stockProduk', StockProductController::class,array('as' => 'admin'));
         Route::resource('user-profile',UserProfileController::class,array('as' => 'admin'));
         Route::resource('pemesanan',AdminPemesananController::class,array('as' => 'admin'));
+        Route::get('pemesanan-approve/{id}',[AdminPemesananController::class,'approve'])->name('admin.pemesanan-approve');
+        Route::get('pemesanan-reject/{id}',[AdminPemesananController::class,'reject'])->name('admin.pemesanan-reject');
+        Route::get('pemesanan-return/{id}',[AdminPemesananController::class,'return'])->name('admin.pemesanan-return');
     });
     
     Route::get('/user/dashboard', [DashboardController::class, 'user'])->name('dashboardUser');

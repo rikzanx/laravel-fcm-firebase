@@ -12,6 +12,8 @@ use App\Models\Pemesanan;
 use App\Models\PemesananItem;
 use App\Models\Keranjang;
 use App\Models\Barang;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class PemesananController extends Controller
 {
@@ -90,6 +92,11 @@ class PemesananController extends Controller
             $pemesanan->total_harga = $total_harga;
             $pemesanan->save();
             Keranjang::where('user_id',$user->id)->delete();
+            $admin_id = User::where('role','admin')->first();
+            $admin_id = $admin_id ? $admin_id->id : 0;
+            $notifTitle= "LandsCamping, Ada Pesanan baru dari pelanggan";
+            $notifBody = "Pesanan Baru dari pelanggan silahkan di cek";
+            $this->sendNotif($admin_id,$notifTitle,$notifBody);
 
             DB::commit();
             return redirect()->back()->with('success','Pemesanan Berhasil Dibuat');
@@ -131,5 +138,47 @@ class PemesananController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function sendNotif($user_id,$title,$body)
+    {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+        $FcmToken = User::where('id',$user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->all();
+            
+        $serverKey = 'AAAARSFMIAE:APA91bG5s_2_Kee0Yt1ARV0uhuyg4w5VFnPUVPOm0pRJ8vV8GaRtbVPxE8eb_Hhg2JqrZ-FsI1fyImKU-HVScrQe_i36Q2E04meuyg1k5t6Ur5moz-avDnFYVoahYWaR90KaYvtDSF-4'; // ADD SERVER KEY HERE PROVIDED BY FCM
+    
+        $data = [
+            "registration_ids" => $FcmToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body
+            ]
+        ];
+        $encodedData = json_encode($data);
+    
+        $headers = [
+            'Authorization:key=' . $serverKey,
+            'Content-Type: application/json',
+        ];
+    
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+        // Execute post
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            Log::error('Curl failed: ' . curl_error($ch));
+        }        
+        // Close connection
+        curl_close($ch);
     }
 }

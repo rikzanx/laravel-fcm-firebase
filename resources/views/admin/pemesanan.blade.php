@@ -23,6 +23,7 @@
                                 <th style="text-align:center">Total Harga</th>
                                 <th style="text-align:center">Status</th>
                                 <th style="text-align:center">Tanggal</th>
+                                <th style="text-align:center">User</th>
                                 <th style="text-align:center">Action</th>
                             </tr>
                         </thead>
@@ -32,16 +33,93 @@
                                 <td style="text-align: center;" class="sorting_1">{{ $index+1 }}</td>
                                 <td style="text-align:center">{{ $pemesanan->no_pemesanan }}</td>
                                 <td style="text-align:center">{{ $pemesanan->total_harga }}</td>
+                                @if($pemesanan->status == "konfirmasi" && $pemesanan->status_pengembalian == 1)
+                                <td style="text-align: center;">Selesai</td>
+                                @else
                                 <td style="text-align: center;">{{ $pemesanan->status }}</td>
+                                @endif
                                 <td style="text-align: center;">{{ $pemesanan->created_at }}</td>
+                                <td style="text-align: center;">{{ $pemesanan->user->first_name }}</td>
                                 <td style="text-align: center;">
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example" data-toggle="modal">
                                         <button type="button" data-target="#detailpemesanan{{ $pemesanan->id }}" data-toggle="modal" class="btn btn-primary"><i class="fa-solid fa-eye"></i></button>
-                                        <!-- <button type="button" data-target="#editdataproduct" data-toggle="modal" class="btn btn-primary"><i class="fa-solid fa-edit"></i></button> -->
-                                        <!-- <button type="button" class="btn btn-primary"><i class="fa-solid fa-trash"></i></button> -->
+                                        @if($pemesanan->status == "proses")
+                                        <button type="button" data-target="#approve{{ $pemesanan->id }}" data-toggle="modal" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+                                        <button type="button" data-target="#reject{{ $pemesanan->id }}" data-toggle="modal" class="btn btn-warning"><i class="fa-solid fa-close"></i></button>
+                                        @endif
+                                        @if($pemesanan->status_pengembalian == 0 && $pemesanan->status == "konfirmasi")
+                                        <button type="button" data-target="#return{{ $pemesanan->id }}" data-toggle="modal" class="btn btn-secondary"><i class="fa-solid fa-rotate-right"></i></button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
+                            @if($pemesanan->status == "proses")
+                                <!-- Approve Pemesanan -->
+                                <div class="modal fade" id="approve{{ $pemesanan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header merah text-putih">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Approve Pesanan</h1>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Apakah anda yakin akan mengapprove pesanan ini&hellip;</p>
+                                                <form method="GET" action="{{ route('admin.pemesanan-approve',$pemesanan->id) }}">
+                                                    @csrf
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-success">Approve</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Reject Pemesanan -->
+                                <div class="modal fade" id="reject{{ $pemesanan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header merah text-putih">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Reject Pesanan</h1>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Apakah anda yakin akan mereject pesanan ini&hellip;</p>
+                                                <form method="GET" action="{{ route('admin.pemesanan-reject',$pemesanan->id) }}">
+                                                    @csrf
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-warning">Reject</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @if($pemesanan->status_pengembalian == 0 && $pemesanan->status == "konfirmasi")
+                            <!-- Return Pemesanan -->
+                            <div class="modal fade" id="return{{ $pemesanan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header merah text-putih">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Retur Pesanan</h1>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Apakah anda yakin akan meretur pesanan ini&hellip;</p>
+                                            <form method="GET" action="{{ route('admin.pemesanan-return',$pemesanan->id) }}">
+                                                @csrf
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-secondary">Retur</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -78,7 +156,11 @@
                         <div class="col-6">
                             <div class="form-group mb-3">
                                 <label class="form-label">Status</label>
+                                @if($pemesanan->status == "konfirmasi" && $pemesanan->status_pengembalian == 1)
+                                <input type="text" class="form-control" name="total_harga" value="Selesai" placeholder="Masukkan Jumlah" disabled>
+                                @else
                                 <input type="text" class="form-control" name="total_harga" value="{{ $pemesanan->status }}" placeholder="Masukkan Jumlah" disabled>
+                                @endif
                             </div>
                         </div>
                         <div class="col-6">

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('status')->default('proses')->comment('
                 proses: pemesanan sedang berlangsung blm dikonfirmasi,
                 Kofirmasi:sudah di konfirmsi oleh admin,
-                Gagal:Gagal karena ditolak oleh admin');
+                ditolak:Gagal karena ditolak oleh admin');
             $table->string('status_pengembalian')->default(0);
             $table->timestamps();
         });
