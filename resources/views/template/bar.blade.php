@@ -38,6 +38,14 @@
                     </a>
                 </li>
                 <li class="">
+                    <a href="{{ route('user.pemesanan.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V6l-3-4H6zM3.8 6h16.4M16 10a4 4 0 1 1-8 0" />
+                        </svg>
+                        <span class="ml-4">Pesanan</span>
+                    </a>
+                </li>
+                <li class="">
                     <a href="{{ route('user.ketentuan.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -90,7 +98,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto navbar-list align-items-center">
 
-                        <li class="nav-item nav-icon nav-item-icon dropdown">
+                        <!-- <li class="nav-item nav-icon nav-item-icon dropdown">
                             <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
@@ -158,7 +166,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item nav-icon nav-item-icon dropdown">
                             <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -166,7 +174,7 @@
                                     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                                     <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                                 </svg>
-                                <span class="bg-primary "></span>
+                                <span class="bg-primary"></span>
                             </a>
                             <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <div class="card shadow-none m-0">
@@ -174,7 +182,7 @@
                                         <div class="cust-title p-3">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="mb-0">Notifications</h5>
-                                                <a class="badge badge-primary badge-card" href="#">{{ (isset($notifications) && is_array($notifications)) ? count($notifications) : 0 }}</a>
+                                                <a class="badge badge-primary badge-card" href="#">{{ isset($notifications) ? count($notifications) : 0 }}</a>
                                             </div>
                                         </div>
                                         <div class="px-3 pt-0 pb-0 sub-card">

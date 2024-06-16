@@ -75,18 +75,23 @@ class AuthController extends Controller
     public function redirectToDashboard()
     {
         $user=  Auth::user();
-        if ($user->role === 'admin') {
-            return redirect()->route('dashboardAdmin');
-        } else {
-            return redirect()->route('dashboardUser');
+        if($user){
+            if ($user->role === 'admin') {
+                return redirect()->route('dashboardAdmin');
+            } else {
+                return redirect()->route('dashboardUser');
+            }
+        }else{
+
+            return redirect()->route('login')->with('danger', 'Success Logout');
         }
     }
     
     public function logout() {
         Session::flush();
         Auth::logout();
-  
         return redirect()->route('login')->with('danger', 'Success Logout');
+  
     }
 
 

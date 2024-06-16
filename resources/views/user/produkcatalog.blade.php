@@ -50,6 +50,8 @@
                 <img src="{{ asset('foto_barang/'.$barang->foto) }}" class="card-img-top" alt="#">
                 <div class="card-body">
                     <h4 class="card-title">{{ $barang->nama }}</h4>
+                    <h6 class="card-title">{{ $barang->harga }} / Hari</h6>
+                    <p class="card-text">Stock tersedia: {{ $barang->stock_ready }}</p>
                     <p class="card-text">{{ $barang->deskripsi }}</p>
                     <a href="#" class="btn btn-primary">Pesan</a>
                 </div>

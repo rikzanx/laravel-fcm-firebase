@@ -16,39 +16,48 @@ class BarangSeeder extends Seeder
         $barangs = Array(
             array(
                 'nama' => 'Tenda Dome Kapasitas 2',
-                'foto' => 'tenda-dome-kapasitas-2.jfif'
+                'foto' => 'tenda-dome-kapasitas-2.jfif',
+                'harga' => 40000
             ),
             array(
                 'nama' => 'Tenda Dome Kapasitas 4',
-                'foto' => 'tenda-dome-kapasitas-4.jfif'
+                'foto' => 'tenda-dome-kapasitas-4.jfif',
+                'harga' => 65000
             ),
             array(
                 'nama' => 'Carrier',
-                'foto' => 'carrier.webp'
+                'foto' => 'carrier.webp',
+                'harga' => 30000
             ),
             array(
                 'nama' => 'Sleeping Bag',
-                'foto' => 'sleeping-bag.jfif'
+                'foto' => 'sleeping-bag.jfif',
+                'harga' => 15000
             ),
             array(
                 'nama' => 'Nesting',
-                'foto' => 'nesting.png'
+                'foto' => 'nesting.png',
+                'harga' => 10000
             ),
             array(
                 'nama' => 'Matras',
-                'foto' => 'matras.avif'
+                'foto' => 'matras.avif',
+                'harga' => 5000
             ),
             array(
                 'nama' => 'Flysheet',
-                'foto' => 'flysheet.webp'
+                'foto' => 'flysheet.webp',
+                'harga' => 20000
             ),
             array(
                 'nama' => 'Headlamp',
-                'foto' => 'headlamp.jpg'
+                'foto' => 'headlamp.jpg',
+                'harga' => 5000
             ),
             array(
                 'nama' => 'Traking Pool',
-                'foto' => 'traking-pool.jpg'
+                'foto' => 'traking-pool.jpg',
+                'harga' => 20000
             ),
         );
 
@@ -61,7 +70,10 @@ class BarangSeeder extends Seeder
                 'kode' => $nextId,
                 'nama' => $barang['nama'],
                 'foto' => $barang['foto'],
-                'deskripsi' => 'Deskripsi : '.$barang['nama']
+                'harga' => $barang['harga'],
+                'deskripsi' => 'Deskripsi : '.$barang['nama'],
+                'stock' => 100,
+                'stock_ready' => 100
             ]);
         }
     }
