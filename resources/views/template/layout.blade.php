@@ -134,7 +134,7 @@
             const title = payload.notification.title;
             const options = {
                 body: payload.notification.body,
-                icon: payload.notification.icon,
+                icon: '{{ asset('templateview/assets/images/logolandscape.png') }}',
             };
             new Notification(title, options);
             // location.reload();
