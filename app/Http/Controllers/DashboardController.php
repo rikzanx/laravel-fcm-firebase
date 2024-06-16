@@ -20,8 +20,10 @@ class DashboardController extends Controller
     public function admin()
     {
         $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
         if($user->role == "admin"){
             return view('admin.dashboardAdmin',[
+                'notifications' => $notifications
             ]);
         }else{
             return redirect()->route('dashboardUser');

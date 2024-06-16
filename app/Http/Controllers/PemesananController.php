@@ -13,6 +13,7 @@ use App\Models\PemesananItem;
 use App\Models\Keranjang;
 use App\Models\Barang;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Log;
 
 class PemesananController extends Controller
@@ -23,10 +24,11 @@ class PemesananController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
         $pemesanans = Pemesanan::with('items.barang')->where('user_id',$user->id)->get();
-        // dd($pemesanans);
         return view('user.pemesanan',[
-            'pemesanans' => $pemesanans
+            'pemesanans' => $pemesanans,
+            'notifications' => $notifications
         ]);
     }
 
@@ -94,9 +96,16 @@ class PemesananController extends Controller
             Keranjang::where('user_id',$user->id)->delete();
             $admin_id = User::where('role','admin')->first();
             $admin_id = $admin_id ? $admin_id->id : 0;
+
             $notifTitle= "LandsCamping, Ada Pesanan baru dari pelanggan";
             $notifBody = "Pesanan Baru dari pelanggan silahkan di cek";
             $this->sendNotif($admin_id,$notifTitle,$notifBody);
+
+            Notification::create([
+                'user_id_from' => $user->id,
+                'user_id_to' => $admin_id,
+                'text' => $notifTitle.' '.$notifBody
+            ]);
 
             DB::commit();
             return redirect()->back()->with('success','Pemesanan Berhasil Dibuat');

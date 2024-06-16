@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Keranjang;
 use App\Models\Barang;
+use App\Models\Notification;
 
 
 class KeranjangController extends Controller
@@ -20,11 +21,13 @@ class KeranjangController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
         $barangs = Barang::get();
         $keranjangs = Keranjang::with('barang')->where('user_id',$user->id)->get();
         return view('user.keranjang',[
             'barangs' => $barangs,
-            'keranjangs' => $keranjangs
+            'keranjangs' => $keranjangs,
+            'notifications' => $notifications
         ]);
     }
 

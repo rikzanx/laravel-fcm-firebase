@@ -146,52 +146,25 @@
                                         <div class="cust-title p-3">
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <h5 class="mb-0">Notifications</h5>
-                                                <a class="badge badge-primary badge-card" href="#">3</a>
+                                                <a class="badge badge-primary badge-card" href="#">{{ isset($notifications) ? count($notifications) : 0 }}</a>
                                             </div>
                                         </div>
                                         <div class="px-3 pt-0 pb-0 sub-card">
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3 border-bottom">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/01.jpg" alt="01">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Emma Watson</h6>
-                                                            <small class="text-dark"><b>12 : 47 pm</b></small>
+                                            @if(isset($notifications))
+                                                @foreach($notifications as $notif)
+                                                <a href="#" class="iq-sub-card">
+                                                    <div class="media align-items-center cust-card py-3 border-bottom">
+                                                        <div class="media-body ml-3">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <h6 class="mb-0">{{ $notif->sender ? $notif->sender->first_name : '' }}</h6>
+                                                                <small class="text-dark"><b>{{ $notif->created_at }}</b></small>
+                                                            </div>
+                                                            <small class="mb-0">{{ $notif->text }}</small>
                                                         </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>
                                                     </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3 border-bottom">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/02.jpg" alt="02">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Ashlynn Franci</h6>
-                                                            <small class="text-dark"><b>11 : 30 pm</b></small>
-                                                        </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a href="#" class="iq-sub-card">
-                                                <div class="media align-items-center cust-card py-3">
-                                                    <div class="">
-                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/03.jpg" alt="03">
-                                                    </div>
-                                                    <div class="media-body ml-3">
-                                                        <div class="d-flex align-items-center justify-content-between">
-                                                            <h6 class="mb-0">Kianna Carder</h6>
-                                                            <small class="text-dark"><b>11 : 21 pm</b></small>
-                                                        </div>
-                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                                @endforeach
+                                            @endif
                                         </div>
                                         <a class="right-ic btn btn-primary btn-block position-relative p-2" href="#" role="button">
                                             View All
@@ -213,7 +186,7 @@
                                     <svg class="svg-icon mr-0 text-primary" id="h-01-p" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <a href="/userprofile">My Profile</a>
+                                    <a href="{{ route('admin.user-profile.index') }}">My Profile</a>
                                 </li>
                                 <li class="dropdown-item  d-flex svg-icon border-top">
                                     <svg class="svg-icon mr-0 text-primary" id="h-05-p" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

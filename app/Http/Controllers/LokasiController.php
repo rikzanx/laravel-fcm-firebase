@@ -8,6 +8,7 @@ use Validator;
 use session;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Notification;
 
 class LokasiController extends Controller
 {
@@ -16,7 +17,11 @@ class LokasiController extends Controller
      */
     public function index()
     {
-        return view('user.lokasi');
+        $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
+        return view('user.lokasi',[
+            'notifications' => $notifications
+        ]);
     }
 
     /**

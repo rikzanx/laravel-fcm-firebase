@@ -8,6 +8,7 @@ use Validator;
 use session;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Notification;
 use App\Models\Barang;
 
 class ProductCatalogController extends Controller
@@ -17,9 +18,12 @@ class ProductCatalogController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
         $barangs = Barang::get();
         return view('user.produkcatalog',[
-            'barangs' => $barangs
+            'barangs' => $barangs,
+            'notifications' => $notifications
         ]);
     }
 

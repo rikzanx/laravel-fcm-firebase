@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('pemesanan-approve/{id}',[AdminPemesananController::class,'approve'])->name('admin.pemesanan-approve');
         Route::get('pemesanan-reject/{id}',[AdminPemesananController::class,'reject'])->name('admin.pemesanan-reject');
         Route::get('pemesanan-return/{id}',[AdminPemesananController::class,'return'])->name('admin.pemesanan-return');
+        Route::resource('user-profile',UserProfileController::class,array('as' => 'admin'));
     });
     
     Route::get('/user/dashboard', [DashboardController::class, 'user'])->name('dashboardUser');

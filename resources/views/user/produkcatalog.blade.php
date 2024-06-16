@@ -19,7 +19,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div data-toggle-extra="tab" data-target-extra="#list">
+                            <!-- <div data-toggle-extra="tab" data-target-extra="#list">
                                 <div class="grid-icon">
                                     <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="21" y1="10" x2="3" y2="10"></line>
@@ -28,10 +28,10 @@
                                         <line x1="21" y1="18" x2="3" y2="18"></line>
                                     </svg>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="pl-3 border-left btn-new">
-                            <a href="/keranjang" class="btn btn-primary" data-target="#new-project-modal" data-toggle="modal">keranjang</a>
+                            <a href="{{ route('user.keranjang.index') }}" class="btn btn-primary">keranjang</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <h6 class="card-title">{{ $barang->harga }} / Hari</h6>
                     <p class="card-text">Stock tersedia: {{ $barang->stock_ready }}</p>
                     <p class="card-text">{{ $barang->deskripsi }}</p>
-                    <a href="#" class="btn btn-primary">Pesan</a>
+                    <a href="{{ route('user.keranjang.index') }}" class="btn btn-primary">Pesan</a>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ use session;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\Barang;
+use App\Models\Notification;
 
 class StockProductController extends Controller
 {
@@ -17,9 +18,12 @@ class StockProductController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
         $barangs = Barang::get();
         return view('admin.stockProduk',[
-            'barangs' => $barangs
+            'barangs' => $barangs,
+            'notifications' => $notifications
         ]);
     }
 

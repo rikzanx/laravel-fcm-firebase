@@ -8,6 +8,7 @@ use Validator;
 use session;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\Notification;
 
 class UserProfileController extends Controller
 {
@@ -16,7 +17,12 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        return view('user.userprofile');
+        $user = Auth::user();
+        $notifications = Notification::with('sender')->where('user_id_to',$user->id)->get();
+        return view('user.userprofile',[
+            'user' => $user,
+            'notifications' => $notifications
+        ]);
     }
 
     /**
